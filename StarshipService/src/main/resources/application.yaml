@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: Starship-Service
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/soa-db
+    username: ${DATABASE_USERNAME:admin}
+    password: ${DATABASE_PASSWORD:admin}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: POSTGRESQL
+  sql:
+    init:
+      platform: postgres
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+server:
+  port: 8081
+
+feign:
+  httpclient:
+    disable-ssl-validation: true
+    enabled: true
+  okhttp:
+    enabled: true
+
+#Параметры первого сервиса
+service:
+  first-service:
+    timeout: 30000
+    url: https://${MARINES_HOST:localhost}:${MARINES_PORT:8000}
