@@ -16,6 +16,14 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  cloud:
+    consul:
+      host: ${CONSUL_HOST:localhost}
+      port: ${CONSUL_PORT:8500}
+      discovery:
+        instanceId: ${spring.application.name}:${random.value}
+        healthCheckPath: /health
+        healthCheckInterval: 20s
 
 server:
   port: 8081
@@ -31,4 +39,4 @@ feign:
 service:
   first-service:
     timeout: 30000
-    url: https://${MARINES_HOST:localhost}:${MARINES_PORT:8000}
+    url: http://${MARINES_HOST:localhost}:${MARINES_PORT:8000}

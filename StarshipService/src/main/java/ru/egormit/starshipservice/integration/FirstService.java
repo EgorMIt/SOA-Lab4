@@ -1,6 +1,7 @@
 package ru.egormit.starshipservice.integration;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,7 +23,9 @@ public interface FirstService {
      * @param id идентификатор
      * @return модель Spacemarine
      */
-    @GetMapping(EndpointsFirstService.GET_SPACEMARINE)
+    @GetMapping(value = EndpointsFirstService.GET_SPACEMARINE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     SpaceMarineResponse getSpacemarine(@PathVariable Long id);
 
     /**
@@ -31,7 +34,9 @@ public interface FirstService {
      * @param id             идентификатор
      * @param spaceMarineDto новая модель
      */
-    @PutMapping(EndpointsFirstService.UPDATE_SPACEMARINE)
+    @PutMapping(value = EndpointsFirstService.UPDATE_SPACEMARINE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     void updateSpacemarine(@PathVariable Long id, @RequestBody SpaceMarineUpdateRequest spaceMarineDto);
 
 }
