@@ -30,26 +30,16 @@ public class StarshipController {
      */
     private final StarshipService starshipService;
 
-    /**
-     * Создание корабля.
-     *
-     * @param request тело запроса.
-     */
-    @PostMapping(value = Endpoints.CREATE_STARSHIP)
-    public ResponseEntity<Object> getStarship(@RequestBody StarShipRequest request) {
-        starshipService.createStarship(request);
-        return ResponseEntity.ok().build();
-    }
-
-    /**
-     * Получение списка кораблей.
-     *
-     * @return список кораблей.
-     */
-    @GetMapping(value = Endpoints.GET_ALL_STARSHIPS)
-    public ResponseEntity<List<StarShipDto>> getAllStarships() {
-        return new ResponseEntity<>(starshipService.getAllStarships(), HttpStatus.OK);
-    }
+//    @PostMapping(value = Endpoints.CREATE_STARSHIP)
+//    public ResponseEntity<Object> createStarship(@RequestBody StarShipRequest request) {
+//        starshipService.createStarship(request);
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    @GetMapping(value = Endpoints.GET_ALL_STARSHIPS)
+//    public ResponseEntity<List<StarShipDto>> getAllStarships() {
+//        return new ResponseEntity<>(starshipService.getAllStarships(), HttpStatus.OK);
+//    }
 
     /**
      * Добавление на корабль

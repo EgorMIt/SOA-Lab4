@@ -47,7 +47,7 @@ public class StarShipDto {
     private Long marinesCount;
 
     /**
-     * ID десетников на корабле.
+     * ID десантников на корабле.
      */
     List<Long> spaceMarines;
 
