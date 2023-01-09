@@ -24,12 +24,12 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new ServletRegistrationBean<>(servlet, "/ws/*");
     }
 
-    @Bean(name = "countries")
+    @Bean(name = "starship")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema schema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("SchemaPort");
         wsdl11Definition.setLocationUri("/ws");
-        wsdl11Definition.setTargetNamespace("http://localhost:8081");
+        wsdl11Definition.setTargetNamespace("http://www.baeldung.com/springsoap/gen");
         wsdl11Definition.setSchema(schema);
         return wsdl11Definition;
     }

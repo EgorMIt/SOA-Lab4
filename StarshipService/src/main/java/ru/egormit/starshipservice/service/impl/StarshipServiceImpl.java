@@ -55,7 +55,7 @@ public class StarshipServiceImpl implements StarshipService {
         starShip.setName(request.getName());
         starShip.setFleet(request.getFleet());
         starShip.setCoordinateX(request.getCoordinates().getX());
-        starShip.setCoordinateY(request.getCoordinates().getY());
+        starShip.setCoordinateY((long) request.getCoordinates().getY());
 
         starshipRepository.save(starShip);
     }

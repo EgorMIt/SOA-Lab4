@@ -2,39 +2,56 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.baeldung.com/springsoap/gen"
            targetNamespace="http://www.baeldung.com/springsoap/gen" elementFormDefault="qualified">
 
-    <xs:element name="StarShipRequest">
+    <xs:element name="createStarship">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="name" type="xs:string"/>
                 <xs:element name="fleet" type="xs:string"/>
-                <xs:element name="coordinates" type="tns:coordinates"/>
+                <xs:element name="coordinates" type="tns:coordinatesXml"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="StarShipResponse">
+    <xs:element name="getAllStarships">
         <xs:complexType>
             <xs:sequence>
-                <xs:element minOccurs="0" maxOccurs="unbounded" name="dtos" nillable="true" type="tns:StarShipDto"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="dtos" nillable="true" type="tns:starshipXml"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <xs:complexType name="StarShipDto">
+    <xs:complexType name="starshipXml">
         <xs:sequence>
-            <xs:element name="id" type="xs:int"/>
+            <xs:element name="id" type="xs:long"/>
             <xs:element name="name" type="xs:string"/>
             <xs:element name="fleet" type="xs:string"/>
-            <xs:element name="coordinates" type="tns:coordinates"/>
-            <xs:element name="health" type="xs:int"/>
-            <xs:element name="marinesCount" type="xs:int"/>
+            <xs:element name="coordinates" type="tns:coordinatesXml"/>
+            <xs:element name="health" type="xs:long"/>
+            <xs:element name="marinesCount" type="xs:long"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="coordinates">
+    <xs:complexType name="coordinatesXml">
         <xs:sequence>
             <xs:element name="x" type="xs:int"/>
-            <xs:element name="y" type="xs:int"/>
+            <xs:element name="y" type="xs:long"/>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:element name="addMarineToStarship">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="spacemarineId" type="xs:long"/>
+                <xs:element name="starshipId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="cleanStarship">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>
