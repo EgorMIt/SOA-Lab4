@@ -13,7 +13,7 @@ import ru.egormit.starshipservice.service.StarshipService;
 @RequiredArgsConstructor
 public class StarshipController {
 
-    private final StarshipService starshipService;
+//    private final StarshipService starshipService;
 
 //    @PostMapping(value = Endpoints.CREATE_STARSHIP)
 //    public ResponseEntity<Object> createStarship(@RequestBody StarShipRequest request) {

@@ -27,7 +27,7 @@ public class StarShipDto {
     private String name;
 
     /**
-     * Флотн.
+     * Флот.
      */
     private String fleet;
 

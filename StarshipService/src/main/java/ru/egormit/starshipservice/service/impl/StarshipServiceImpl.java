@@ -1,18 +1,19 @@
 package ru.egormit.starshipservice.service.impl;
 
+import com.baeldung.springsoap.gen.GetSpacemarine;
+import com.baeldung.springsoap.gen.GetSpacemarineResponse;
+import com.baeldung.springsoap.gen.UpdateSpacemarine;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import ru.egormit.library.SpaceMarine;
-import ru.egormit.library.SpaceMarineResponse;
-import ru.egormit.library.SpaceMarineUpdateRequest;
 import ru.egormit.library.StarShip;
 import ru.egormit.library.StarShipDto;
 import ru.egormit.library.StarShipRequest;
 import ru.egormit.starshipservice.domain.StarshipRepository;
 import ru.egormit.starshipservice.error.ErrorDescriptions;
-import ru.egormit.starshipservice.integration.FirstService;
+import ru.egormit.starshipservice.integration.SoapFeignClient;
 import ru.egormit.starshipservice.service.StarshipService;
 import ru.egormit.starshipservice.utils.ModelMapper;
 
@@ -30,9 +31,9 @@ import java.util.stream.Collectors;
 public class StarshipServiceImpl implements StarshipService {
 
     /**
-     * {@link FirstService}.
+     * {@link SoapFeignClient}.
      */
-    private final FirstService firstService;
+    private final SoapFeignClient firstService;
 
     /**
      * {@link StarshipRepository}.
@@ -55,7 +56,7 @@ public class StarshipServiceImpl implements StarshipService {
         starShip.setName(request.getName());
         starShip.setFleet(request.getFleet());
         starShip.setCoordinateX(request.getCoordinates().getX());
-        starShip.setCoordinateY((long) request.getCoordinates().getY());
+        starShip.setCoordinateY(request.getCoordinates().getY());
 
         starshipRepository.save(starShip);
     }
@@ -81,17 +82,20 @@ public class StarshipServiceImpl implements StarshipService {
      */
     @Override
     public void addMarineToStarship(Long spaceMarineId, Long starShipId) {
-        SpaceMarineResponse spaceMarine = firstService.getSpacemarine(spaceMarineId);
+        GetSpacemarine getSpacemarine = new GetSpacemarine();
+        getSpacemarine.setId(spaceMarineId);
+        GetSpacemarineResponse spaceMarine = firstService.getSpacemarineWithSoap(getSpacemarine);
         ErrorDescriptions.SPACEMACS_IS_BUSY.throwIfFalse(ObjectUtils.isEmpty(spaceMarine.getStarShipId()));
 
-        SpaceMarineUpdateRequest request = modelMapper.map(spaceMarine);
+        UpdateSpacemarine request = modelMapper.mapToXml(spaceMarine);
 
         StarShip starShip = starshipRepository.findById(starShipId)
                 .orElseThrow(ErrorDescriptions.STARSHIP_NOT_FOUND::exception);
 
-        request.setStarShip(modelMapper.map(starShip));
+        request.setStarShip(modelMapper.mapToXml(modelMapper.map(starShip)));
+        request.setId(spaceMarineId);
 
-        firstService.updateSpacemarine(spaceMarineId, request);
+        firstService.updateSpacemarineWithSoap(request);
     }
 
     /**
@@ -107,11 +111,16 @@ public class StarshipServiceImpl implements StarshipService {
         ErrorDescriptions.STARSHIP_IS_EMPTY.throwIfTrue(starShip.getSpaceMarines().isEmpty());
 
         for (SpaceMarine spaceMarine : starShip.getSpaceMarines()) {
-            SpaceMarineResponse spaceMarineDto = firstService.getSpacemarine(spaceMarine.getId());
-            SpaceMarineUpdateRequest request = modelMapper.map(spaceMarineDto);
+            GetSpacemarine getSpacemarine = new GetSpacemarine();
+            getSpacemarine.setId(spaceMarine.getId());
+            GetSpacemarineResponse spaceMarineDto = firstService.getSpacemarineWithSoap(getSpacemarine);
+
+            UpdateSpacemarine request = modelMapper.mapToXml(spaceMarineDto);
 
             request.setStarShip(null);
-            firstService.updateSpacemarine(spaceMarineDto.getId(), request);
+            request.setId(spaceMarineDto.getId());
+
+            firstService.updateSpacemarineWithSoap(request);
         }
     }
 

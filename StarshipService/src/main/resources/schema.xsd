@@ -54,4 +54,44 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+    <xs:element name="getSpacemarine">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getSpacemarineResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="coordinates" type="tns:coordinatesXml"/>
+                <xs:element name="creationDate" type="xs:dateTime"/>
+                <xs:element name="health" type="xs:long"/>
+                <xs:element name="category" type="xs:string"/>
+                <xs:element name="weaponType" type="xs:string"/>
+                <xs:element name="meleeWeapon" type="xs:string"/>
+                <xs:element name="starShipId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateSpacemarine">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="coordinates" type="tns:coordinatesXml"/>
+                <xs:element name="creationDate" type="xs:dateTime"/>
+                <xs:element name="health" type="xs:long"/>
+                <xs:element name="category" type="xs:string"/>
+                <xs:element name="weaponType" type="xs:string"/>
+                <xs:element name="meleeWeapon" type="xs:string"/>
+                <xs:element name="starShip" type="tns:starshipXml"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

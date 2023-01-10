@@ -36,7 +36,7 @@ public class StarshipsEndpoint {
         GetAllStarships getAllStarships = new GetAllStarships();
         getAllStarships.setDtos(starshipService.getAllStarships()
                 .stream()
-                .map(modelMapper::map)
+                .map(modelMapper::mapToXml)
                 .collect(Collectors.toList()));
         return getAllStarships;
     }
