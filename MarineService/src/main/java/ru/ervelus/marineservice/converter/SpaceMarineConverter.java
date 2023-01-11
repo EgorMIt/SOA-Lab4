@@ -1,6 +1,7 @@
 package ru.ervelus.marineservice.converter;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import ru.egormit.library.Coordinates;
 import ru.egormit.library.SpaceMarine;
 import ru.egormit.library.SpaceMarineCreateRequest;
@@ -36,7 +37,7 @@ public class SpaceMarineConverter {
         return spaceMarine;
     }
 
-    public SpaceMarine updateRequestToEntity(SpaceMarineUpdateRequest request, SpaceMarine spaceMarine) {
+    public SpaceMarine updateRequestToEntity(SpaceMarineUpdateRequest request, SpaceMarine spaceMarine, StarShip starShip) {
         spaceMarine.setName(request.getName());
         spaceMarine.setCoordinateX(request.getCoordinates().getX());
         spaceMarine.setCoordinateY(request.getCoordinates().getY());
@@ -44,9 +45,9 @@ public class SpaceMarineConverter {
         spaceMarine.setCategory(request.getCategory());
         spaceMarine.setWeaponType(request.getWeaponType());
         spaceMarine.setMeleeWeapon(request.getMeleeWeapon());
-        if (request.getStarShip() != null)
-            spaceMarine.setStarShip(starShipEntityFromDto(request.getStarShip()));
-        else spaceMarine.setStarShip(null);
+        if(!ObjectUtils.isEmpty(starShip)){
+            spaceMarine.setStarShip(starShip);
+        } else spaceMarine.setStarShip(null);
         return spaceMarine;
     }
 

@@ -39,4 +39,4 @@ feign:
 service:
   first-service:
     timeout: 30000
-    url: http://${MARINES_HOST:localhost}:${MARINES_PORT:8000}
+    url: http://${MARINES_HOST:localhost}:${MARINES_PORT:8734/mule}

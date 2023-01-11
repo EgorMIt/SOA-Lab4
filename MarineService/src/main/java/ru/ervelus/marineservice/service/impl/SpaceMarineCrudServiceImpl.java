@@ -2,14 +2,17 @@ package ru.ervelus.marineservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import ru.egormit.library.PageDto;
 import ru.egormit.library.SpaceMarine;
 import ru.egormit.library.SpaceMarineCreateRequest;
 import ru.egormit.library.SpaceMarineResponse;
 import ru.egormit.library.SpaceMarineSearchResponse;
 import ru.egormit.library.SpaceMarineUpdateRequest;
+import ru.egormit.library.StarShip;
 import ru.ervelus.marineservice.converter.SpaceMarineConverter;
 import ru.ervelus.marineservice.repository.SpaceMarineRepository;
+import ru.ervelus.marineservice.repository.StarshipRepository;
 import ru.ervelus.marineservice.service.SpaceMarineCrudService;
 
 import javax.persistence.EntityNotFoundException;
@@ -22,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SpaceMarineCrudServiceImpl implements SpaceMarineCrudService {
     private final SpaceMarineRepository repository;
+    private final StarshipRepository starshipRepository;
     private final SpaceMarineConverter converter;
 
     @Override
@@ -35,7 +39,13 @@ public class SpaceMarineCrudServiceImpl implements SpaceMarineCrudService {
     @Override
     public void updateSpaceMarine(Long id, SpaceMarineUpdateRequest request) {
         SpaceMarine spaceMarine = repository.findById(id).orElseThrow(EntityNotFoundException::new);
-        repository.save(converter.updateRequestToEntity(request, spaceMarine));
+        StarShip starShip;
+        if (!ObjectUtils.isEmpty(request.getStarShipId())) {
+            starShip = starshipRepository.findById(request.getStarShipId())
+                    .orElseThrow(EntityNotFoundException::new);
+        } else starShip = null;
+
+        repository.save(converter.updateRequestToEntity(request, spaceMarine, starShip));
     }
 
     @Override
