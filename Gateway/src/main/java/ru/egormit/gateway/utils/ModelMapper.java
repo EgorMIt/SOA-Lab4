@@ -31,8 +31,8 @@ public class ModelMapper {
 
     public CreateStarship map(StarShipRequest request) {
         CreateStarship xml = new CreateStarship();
-        xml.setName(xml.getName());
-        xml.setFleet(xml.getFleet());
+        xml.setName(request.getName());
+        xml.setFleet(request.getFleet());
 
         CoordinatesXml coordinatesXml = new CoordinatesXml();
         coordinatesXml.setX(request.getCoordinates().getX());
